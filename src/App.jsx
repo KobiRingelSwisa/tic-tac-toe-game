@@ -1,5 +1,8 @@
 import { useState } from "react";
 import Player from "./components/Player";
+import GameOver from "./components/GameOver";
+import GameBoard from "./components/GameBoard";
+import Log from "./components/Log";
 import { WINNING_COMBOS } from "./winning-combos";
 
 const PLAYERS = {
@@ -75,6 +78,22 @@ function App() {
       };
     });
   }
+
+  function handleRestart() {
+    setGameTurns([]);
+  }
+
+  function handleSelectSquare(rowIndex, colIndex) {
+    setGameTurns((prevTurns) => {
+      const currentPlayer = deriveActivePlayer(prevTurns);
+
+      const updateTurns = [
+        { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
+        ...prevTurns,
+      ];
+      return updateTurns;
+    });
+  }
   return (
     <main>
       <div className="game-container">
@@ -92,7 +111,12 @@ function App() {
             onChangeName={handlePlayerNameChange}
           />
         </ol>
+        {(winner || hasDraw) && (
+          <GameOver winner={winner} onRestart={handleRestart} />
+        )}
+        <GameBoard onSelectSquare={handleSelectSquare} board={gameBoard} />
       </div>
+      <Log turns={gameTurns} />
     </main>
   );
 }
