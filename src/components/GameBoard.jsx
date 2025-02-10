@@ -1,6 +1,6 @@
 function GameBoard({ onSelectSquare, board }) {
   return (
-    <ol>
+    <ol id="game-board">
       {board.map((row, rowIndex) => (
         <li key={rowIndex}>
           <ol>
