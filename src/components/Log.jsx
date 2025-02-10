@@ -1,4 +1,4 @@
-function Log({ turns }) {
+export default function Log({ turns }) {
   return (
     <ol id="log">
       {turns.map((turn) => (
@@ -9,5 +9,3 @@ function Log({ turns }) {
     </ol>
   );
 }
-
-export default Log;
